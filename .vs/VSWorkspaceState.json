@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\assets",
+    "\\src\\assets\\weights"
   ],
-  "SelectedNode": "\\src\\app\\app.component.css",
+  "SelectedNode": "\\src\\assets\\weights\\tiny_face_detector_model-shard1",
   "PreviewInSolutionExplorer": false
 }
