@@ -1,7 +1,4 @@
-body {
-  height: 4rem;
-  width: 500px;
-}
+
 header, footer {
   display: block;
 }
@@ -18,8 +15,6 @@ header img {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  height: 4rem;
-  width: 500px;
 }
 
 .container > div {

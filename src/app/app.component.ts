@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   @ViewChild('overlay') overlay: any;
   public newNose: any;
   public nose: any;
+  public noseQueue = [];
   public videoEl: HTMLVideoElement;
   public canvas: any;
 
@@ -55,8 +56,8 @@ export class AppComponent implements OnInit {
     });
 
     // detect the face with the highest confidence score in an image that coming from webcam
-    // `withFaceExpressions`: Face expression recognition is performed for detected face
     const result = await faceapi
+    // `withFaceExpressions`: Face expression recognition is performed for detected face
       .detectSingleFace(this.videoEl, options)
        .withFaceLandmarks();
 
@@ -86,23 +87,50 @@ export class AppComponent implements OnInit {
       const landmarksArray =  await resizedResults.map(fd => fd.landmarks);
       this.nose = this.newNose;
       this.newNose = landmarksArray[0].positions[30];
-      console.log('newNose: ', this.newNose._x);
-      // this.nose = landmarksArray[0].positions[30];
+      this.noseQueue.push(this.newNose);
+      var len = 5;
+      if (this.noseQueue.length >= len) {
+        this.noseQueue.shift();
+      }
+
+      var left = true
+      var i = 0
+
+      while (left && i < this.noseQueue.length-1) {
+        if (this.noseQueue[i]._x > this.noseQueue[i+1]._x) {
+          left = true
+        } else {
+          left = false
+        }
+        i += 1
+      }
+      if (left) {
+        console.log('LEFT');
+      } else {
+        console.log('no LEFT');
+      }
+      
+
       if (this.nose !== undefined) {
-        console.log('nose: ', this.nose._x);
-        if (this.newNose._x !== this.nose._x)  {
-          window.open(
-            'http://www.google.com',
-            'DescriptiveWindowName',
-            'resizable,scrollbars,status'
-          );
+        //console.log('oyyy: ', this.nose._x, this.newNose._x);
+        if (this.newNose._x < 250) {
+          //console.log('nose: ', this.nose._x);
+          //history.back()
+        }
+        if (this.newNose._x > 350) {
+          //console.log('knowledge: ', this.nose._x);
         }
       }
+          //window.open(
+          //  'http://www.google.com',
+          //  'DescriptiveWindowName',
+          //  'resizable,scrollbars,status'
+          //);
       faceapi.drawLandmarks(
         this.canvas, landmarksArray, { drawLines: true });
     }
 
     // repeatedly perform the face detection while webcam stream the image data
-    setTimeout(() => this.onPlay(), 3000);
-}
+    setTimeout(() => this.onPlay(), 40);
+  }
 }
