@@ -88,44 +88,43 @@ export class AppComponent implements OnInit {
       this.nose = this.newNose;
       this.newNose = landmarksArray[0].positions[30];
       this.noseQueue.push(this.newNose);
-      var len = 5;
+      const len = 5;
       if (this.noseQueue.length >= len) {
         this.noseQueue.shift();
       }
 
-      var left = true
-      var i = 0
+      let left = true;
+      let i = 0;
 
-      while (left && i < this.noseQueue.length-1) {
-        if (this.noseQueue[i]._x > this.noseQueue[i+1]._x) {
-          left = true
+      while (left && i < this.noseQueue.length - 1) {
+        if (this.noseQueue[i]._x > this.noseQueue[i + 1]._x) {
+          left = true;
         } else {
-          left = false
+          left = false;
         }
-        i += 1
+        i += 1;
       }
       if (left) {
         console.log('LEFT');
       } else {
         console.log('no LEFT');
       }
-      
 
       if (this.nose !== undefined) {
-        //console.log('oyyy: ', this.nose._x, this.newNose._x);
+        // console.log('oyyy: ', this.nose._x, this.newNose._x);
         if (this.newNose._x < 250) {
-          //console.log('nose: ', this.nose._x);
-          //history.back()
+          // console.log('nose: ', this.nose._x);
+          // history.back()
         }
         if (this.newNose._x > 350) {
-          //console.log('knowledge: ', this.nose._x);
+          // console.log('knowledge: ', this.nose._x);
         }
       }
-          //window.open(
+          // window.open(
           //  'http://www.google.com',
           //  'DescriptiveWindowName',
           //  'resizable,scrollbars,status'
-          //);
+          // );
       faceapi.drawLandmarks(
         this.canvas, landmarksArray, { drawLines: true });
     }
